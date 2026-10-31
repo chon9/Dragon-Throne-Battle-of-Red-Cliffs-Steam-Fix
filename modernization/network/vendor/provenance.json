@@ -1,0 +1,237 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamapplist.h",
+    "file": "steam/isteamapplist.h",
+    "sha256": "c1add3ed746ec5e39d0ff984c8fed6b4a1e22b5a77d81152804e29e087381032"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamapps.h",
+    "file": "steam/isteamapps.h",
+    "sha256": "75bc3e339ad784d78a4a94a2b63e5df665ee53370dc07b11ef7141485c5b2ccd"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamappticket.h",
+    "file": "steam/isteamappticket.h",
+    "sha256": "01ae66f9508ed26d8dd0aefd21202f454835576e5d7386c11bcd84d11316e035"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamclient.h",
+    "file": "steam/isteamclient.h",
+    "sha256": "2b33ac58a8d840f78018d421bc4494e63374668fa1f7cf7de68bda7ce2fb3ff2"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamcontroller.h",
+    "file": "steam/isteamcontroller.h",
+    "sha256": "9303a964b0f1bd37f7f3a011479fae4bed7221152cc99e949e4223e7242124e4"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamdualsense.h",
+    "file": "steam/isteamdualsense.h",
+    "sha256": "16c2c58094db88a687d0ddbd92f5e069b199c1cb419ea395ad6de177f907683f"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamfriends.h",
+    "file": "steam/isteamfriends.h",
+    "sha256": "4066fa10a8d4f503ad11306f216b4aac3a0798fd58945e93f4e6eaa0537f6c61"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamgamecoordinator.h",
+    "file": "steam/isteamgamecoordinator.h",
+    "sha256": "91b811f28258f8d6b222c4325cbc17e7a9e70cfb3ef217ba6e3a4c94d3bd03a6"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamgameserver.h",
+    "file": "steam/isteamgameserver.h",
+    "sha256": "b80fcaaf57b3896523e179adaf5d43150f4586951cff4e0c9c6271bff8021cd8"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamgameserverstats.h",
+    "file": "steam/isteamgameserverstats.h",
+    "sha256": "5d46add4d07ab48e905f04f9d7455745cdd33927eafd2d5be143dd6e36e1e44d"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamhtmlsurface.h",
+    "file": "steam/isteamhtmlsurface.h",
+    "sha256": "b9184cb833269ebfb6979a8d8e6da860e2cf437c067d079f681d0691aa26af88"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamhttp.h",
+    "file": "steam/isteamhttp.h",
+    "sha256": "e33e78d53aa95ac46da7959b037abdc2985a2832f75a8c1948f9b7484487f979"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteaminput.h",
+    "file": "steam/isteaminput.h",
+    "sha256": "430f6c17ca903e95f5d46cb67cb8c7f80e0ce3bb647637d192b66a2f69528b86"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteaminventory.h",
+    "file": "steam/isteaminventory.h",
+    "sha256": "3228d8cd6a281bd5149fade2ac57aebfd1c2e6126364220f0ae88aae69f0e290"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteammatchmaking.h",
+    "file": "steam/isteammatchmaking.h",
+    "sha256": "c48961fd70ec3dcfa9ff27db2b6f510ff1517d3547fa89b2dcf1742a686ab9e1"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteammusic.h",
+    "file": "steam/isteammusic.h",
+    "sha256": "1211b437fdfd8d90035643ce2c2974cde9deb382fac2cacb6db71237d6c89b1c"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteammusicremote.h",
+    "file": "steam/isteammusicremote.h",
+    "sha256": "1f414960ec474aacc13690bd7125b481acb16b4ecb9bca1e745af059db3c97c1"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamnetworking.h",
+    "file": "steam/isteamnetworking.h",
+    "sha256": "afa6bfdce47c868782e76f8a61acd1097fa991ac019a7a2a5b4a1237c5be5e2d"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamnetworkingmessages.h",
+    "file": "steam/isteamnetworkingmessages.h",
+    "sha256": "f19e926bb23d668ba277adac46d33f91581e14b260d7bac3f0c8b6cebaedcfb6"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamnetworkingsockets.h",
+    "file": "steam/isteamnetworkingsockets.h",
+    "sha256": "fc90944ca06cb0ad010547526e29525edae9967c77608941e6c820a03818a518"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamnetworkingutils.h",
+    "file": "steam/isteamnetworkingutils.h",
+    "sha256": "6fde03f59febe3d74b30282bc496ba90aff7cbccbff6b0db875b4df012d1bcde"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamparentalsettings.h",
+    "file": "steam/isteamparentalsettings.h",
+    "sha256": "e550fca69529c62b76394b95c13f2087d8dc85ff00be47f057132fbc69638a41"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamps3overlayrenderer.h",
+    "file": "steam/isteamps3overlayrenderer.h",
+    "sha256": "d909bb84499c8cf5a1d4272cf9a781692aea3dd936ee6c6b6aa344983baef719"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamremoteplay.h",
+    "file": "steam/isteamremoteplay.h",
+    "sha256": "073b10fdeb988e190aa44e8258bae9b041810b49068a97cbabcc3647609fcada"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamremotestorage.h",
+    "file": "steam/isteamremotestorage.h",
+    "sha256": "b31ceedc3000429277d3de2226d85484b1c8eee6973ef033fd29b8cbde7ac9c4"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamscreenshots.h",
+    "file": "steam/isteamscreenshots.h",
+    "sha256": "295d32128360cdcea67bf797d81906a4d0809d246da5c27b53b8c9c0f4ee054b"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamugc.h",
+    "file": "steam/isteamugc.h",
+    "sha256": "c485c30502a83c73bed7503341b86c97ab142b5dcab8e9d22dc819c5a267cfdf"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamuser.h",
+    "file": "steam/isteamuser.h",
+    "sha256": "22298a9dea30274a85718e7c94602436409f966399112fc3d413d0504b1b9bca"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamuserstats.h",
+    "file": "steam/isteamuserstats.h",
+    "sha256": "b7762bee0b9b6ecdd3ac709cf5a0bbefc769acf258353acbb2cf74f0b1e9ee76"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamutils.h",
+    "file": "steam/isteamutils.h",
+    "sha256": "c7f37534547e59d5f066966fc3156afb68b7834c03dfbada6ef3176bd58d7506"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/isteamvideo.h",
+    "file": "steam/isteamvideo.h",
+    "sha256": "9845a5def2b43b992384f9ebe160114432d5cc2995d127d0d65dd4755d5cb2d0"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/matchmakingtypes.h",
+    "file": "steam/matchmakingtypes.h",
+    "sha256": "a146b5d1b0b28a1ea5c0de4b1b906e24644bfd730490d10f5bc5125bb58f035e"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steam_api.h",
+    "file": "steam/steam_api.h",
+    "sha256": "9d2f7c898c0698eff8852f8826f0f44424e57a93faea714276c41d38b50e3e4c"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steam_api_common.h",
+    "file": "steam/steam_api_common.h",
+    "sha256": "08dbc0c5c90fac8a9d4024af909ab2b824259b5543076d35cfc75bed6d874891"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steam_api_flat.h",
+    "file": "steam/steam_api_flat.h",
+    "sha256": "3fe9b2e07fe1dea31244ea5c8c806c9645ce1ee1764f848f524ed75fcaeab9d2"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steam_api_internal.h",
+    "file": "steam/steam_api_internal.h",
+    "sha256": "b0334efb476fd33d15e0c8456f9edf68d43991d6cb9ccdddca65533063ad317a"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steam_gameserver.h",
+    "file": "steam/steam_gameserver.h",
+    "sha256": "db84a12eda6d9a024b8c9b18e70986a11a8a107f604254d7f9a816a20cd00b05"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamclientpublic.h",
+    "file": "steam/steamclientpublic.h",
+    "sha256": "baa0c90eda681a7730df7e028a093d7a6671ae4a2535cb2043f650036e9ab302"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamencryptedappticket.h",
+    "file": "steam/steamencryptedappticket.h",
+    "sha256": "4c68f86247db4cc6cb5197aefba001fb5aec18ac001f6a384baee38d88b9f4f4"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamhttpenums.h",
+    "file": "steam/steamhttpenums.h",
+    "sha256": "b6d79200f4dbff90daebb94bb2b3e24ef1e998822eb4d5a7ea5fd4c69f9d7f54"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamnetworkingfakeip.h",
+    "file": "steam/steamnetworkingfakeip.h",
+    "sha256": "bbcaa519001c3643f2f149a6cbf72d5ddf5dbfd5959d110aa4d4e6f9f1763d85"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamnetworkingtypes.h",
+    "file": "steam/steamnetworkingtypes.h",
+    "sha256": "51b40afa88bac96e10585f3ef0eb227cee1956cfcaf9a1f52c8da9444a55bd54"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamps3params.h",
+    "file": "steam/steamps3params.h",
+    "sha256": "dfbf93552751460b265ceb31497a48c7354ed3197e3478bbf99bae3e3d8d7102"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamtypes.h",
+    "file": "steam/steamtypes.h",
+    "sha256": "62be41725961e8a94ab15bc6578c0e4a52879d166fd795e384a588c975f59a28"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/rlabrecque/SteamworksSDK/1263fbb403ca89f11cdf33860b565538e0836f6c/public/steam/steamuniverse.h",
+    "file": "steam/steamuniverse.h",
+    "sha256": "2b9c0834ae5a71eac07e6d415ded853c0d0ce3bd91f3e6991597973ed3dee394"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/wine-mirror/wine/2528aff26208257fdbf980666a4f0e66d47563ce/include/dplay.h",
+    "file": "directplay/dplay.h",
+    "sha256": "d7a6374e7195e2608765c6b30a33603e1aae41d2728d284568887980f0e36dea"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/wine-mirror/wine/2528aff26208257fdbf980666a4f0e66d47563ce/COPYING.LIB",
+    "file": "directplay/COPYING.LIB",
+    "sha256": "e237fa56668030e928551ddd60f05df5fe957f75eab874bbd017e085ed722e7c"
+  }
+]

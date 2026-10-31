@@ -1,0 +1,5 @@
+LIBRARY DTNet
+EXPORTS
+    CoCreateInstance=_DTCoCreateInstance@20
+    CoInitialize=ole32.CoInitialize
+    CoUninitialize=ole32.CoUninitialize

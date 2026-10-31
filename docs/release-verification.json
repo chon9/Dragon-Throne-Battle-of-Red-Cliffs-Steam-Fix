@@ -1,0 +1,28 @@
+{
+  "archive_sha256": "2b7c1e39c1ee5f176e051a5836d8b8fb1fcec1ac9c3b6b86db52e9636eb8781e",
+  "installer": "Windows PowerShell 5.1",
+  "checks": [
+    "ZIP integrity",
+    "no full game executable or personal files",
+    "unknown executable rejected before mutation",
+    "damaged payload rejected before mutation",
+    "all installed files match public build manifest",
+    "repeat install rejected",
+    "changed runtime protected on restore",
+    "byte-exact restore",
+    "save and settings sentinels preserved",
+    "new DLLs removed on restore",
+    "previous pack upgrade and byte-exact restore"
+  ],
+  "language": "English assets and current Traditional Chinese registry value checked read-only; live switch not run",
+  "user_confirmed": [
+    "two-PC multiplayer on previous adapter",
+    "revision 3 bottom-right panel"
+  ],
+  "pending": [
+    "public Noto fonts in-game visual check",
+    "friend English UI visual check",
+    "measured command latency",
+    "native 4K"
+  ]
+}
