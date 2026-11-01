@@ -64,6 +64,36 @@ int main(){
         for(int y=873;y<917;++y)for(int x=1466;x<1736;++x)assert(pixels[y*1920+x]==backing);
         for(int i=visible;i<9;++i)assert(pixels[(928+i/3*50)*1920+1494+i%3*86]==backing);
     }
+    // Regression: the game rebuilds the action list by updating x/y only.
+    // Enlarged 80x50 hit dimensions must never reach its 35x35 bitmap reader.
+    for(int pass=0;pass<20;++pass) {
+        SetRect(panel.data(),{1647,903,86,154});
+        for(int i=0;i<8;++i) {
+            auto child=children[i].data();
+            I(child,8)=1648+(i%2)*39;I(child,0xc)=904+(i/2)*39;
+            I(child,0x34)=1;
+        }
+        assert(DrawActions(panel.data(),nullptr,target.data(),nullptr)==7);
+        assert(locks==0);
+        for(int i=0;i<8;++i) {
+            auto r=R(children[i].data());
+            assert(r.w==80&&r.h==50);
+            assert(pixels[(r.y+10)*1920+r.x+20]==0x1000+i);
+        }
+    }
+    // Exact two-button rebuild observed in the frozen mission: new native
+    // positions, but old enlarged dimensions survived list reconstruction.
+    I(panel.data(),0x74)=2;SetRect(panel.data(),{1647,903,86,154});
+    for(int i=0;i<2;++i){I(children[i].data(),8)=1648;I(children[i].data(),0xc)=904+i*54;}
+    assert(DrawActions(panel.data(),nullptr,target.data(),nullptr)==7&&locks==0);
+    // A genuine native resize must survive restoration of the other fields.
+    auto child=children[0].data();
+    I(child,8)=1651;I(child,0x10)=32;
+    RestoreGeometry(child);
+    assert(R(child).x==1651&&R(child).y==904&&R(child).w==32&&R(child).h==35);
+    assert(I(child,0x18)==32*35);
+    RestoreGeometry(child);
+    assert(R(child).w==32&&R(child).h==35);
     assert(Color(0xffffff)==0xffff&&Color(0)==0);
-    puts("PASS: action reflow keeps paint and hit boxes aligned, repeated draw restores native geometry, balanced surface locks and panel bounds");
+    puts("PASS: action reflow, list rebuild freeze regression, partial native geometry changes, balanced surface locks and panel bounds");
 }

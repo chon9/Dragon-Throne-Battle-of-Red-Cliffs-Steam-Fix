@@ -30,3 +30,7 @@ subprocess.run([str(OUT/'Test-Protocol.exe')],check=True,cwd=OUT)
 subprocess.run([str(OUT/'Test-Latency.exe')],check=True,cwd=OUT)
 subprocess.run([str(OUT/'Test-ModernUI.exe')],check=True,cwd=OUT)
 subprocess.run([str(OUT/'Test-ProviderCore.exe')],check=True,cwd=OUT)
+subprocess.run([str(VC/'bin/Hostx64/x86/cl.exe'),'/nologo','/std:c++17','/O2','/MT','/EHsc',
+                '/Fo'+str(OUT/'Test-WorldOrigin.obj'),'/Fe'+str(OUT/'Test-WorldOrigin.exe'),
+                str(ROOT.parent/'Test-WorldOrigin.cpp'),'/link','kernel32.lib'],env=env,cwd=OUT,check=True)
+subprocess.run([str(OUT/'Test-WorldOrigin.exe')],check=True,cwd=OUT)

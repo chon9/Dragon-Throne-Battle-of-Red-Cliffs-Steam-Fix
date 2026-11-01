@@ -1,0 +1,31 @@
+{
+  "version": "0.3.2-public-beta",
+  "archive_sha256": "d42f471a7400fcbf93032de8f41f61d1114bfe72a922a6feaaef6fb97d2defc6",
+  "installer": "Windows PowerShell 5.1",
+  "checks": [
+    "ZIP integrity",
+    "no full game executable or personal files",
+    "unknown executable rejected before mutation",
+    "damaged payload rejected before mutation",
+    "all installed files match public build manifest",
+    "repeat install rejected",
+    "changed runtime protected on restore",
+    "byte-exact restore",
+    "save and settings sentinels preserved",
+    "new DLLs removed on restore",
+    "previous pack upgrade and byte-exact restore"
+  ],
+  "language": "English assets and current Traditional Chinese registry value checked read-only; live switch not run",
+  "user_confirmed": [
+    "two-PC multiplayer on previous adapter",
+    "revision 3 bottom-right panel",
+    "building duplication gone and unit selection correct on local origin fix",
+    "continued gameplay and working buttons on local permanent freeze fix"
+  ],
+  "pending": [
+    "public Noto fonts in-game visual check",
+    "friend English UI visual check",
+    "measured command latency",
+    "native 4K"
+  ]
+}

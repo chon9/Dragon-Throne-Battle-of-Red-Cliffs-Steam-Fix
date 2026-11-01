@@ -66,7 +66,18 @@ struct Geometry {Rect original{},modern{};};
 static std::map<void*,Geometry> geometry;
 static void RestoreGeometry(void* p) {
     auto it=geometry.find(p);
-    if(it!=geometry.end()&&Equal(R(p),it->second.modern))SetRect(p,it->second.original);
+    if(it==geometry.end())return;
+    Rect current=R(p);const auto& saved=it->second;
+    // Native list rebuilding can reposition a control without resetting its
+    // size. Restore each presentation-owned field independently: requiring a
+    // whole-rectangle match left 80x50 hit sizes in the 35x35 bitmap decoder,
+    // causing repeated access violations and a frozen picture.
+    if(current.x==saved.modern.x)current.x=saved.original.x;
+    if(current.y==saved.modern.y)current.y=saved.original.y;
+    if(current.w==saved.modern.w)current.w=saved.original.w;
+    if(current.h==saved.modern.h)current.h=saved.original.h;
+    SetRect(p,current);
+    geometry.erase(it);
 }
 static void ModernGeometry(void* p,Rect r) {
     geometry[p]={R(p),r};SetRect(p,r);

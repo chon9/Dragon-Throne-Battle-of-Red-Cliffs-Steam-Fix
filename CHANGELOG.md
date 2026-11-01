@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.2 — stability beta
+
+- Use the viewport's actual top edge when drawing overlapping buildings, units and effects. This corrects duplicated buildings below the taller resource bar.
+- Restore enlarged control geometry field by field when the native UI moves a button. Previously, rebuilding the command list could leave an 80×50 click area in the 35×35 bitmap drawing path, causing repeated access violations and a frozen picture.
+- Add regression coverage for command-list rebuilding, partial native geometry changes and world-origin projection.
+- Both corrections were confirmed in local gameplay: building duplication stopped, selection remained correct, and continued play with command buttons stayed responsive.
+
 ## 0.3.1 — public beta
 
 - Publish patch sources under MIT with separate third-party notices.

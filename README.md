@@ -11,6 +11,7 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 - Native **1920 × 1080** mission rendering with separated bottom panels and working minimaps, menu entries and tooltips.
 - A larger resource bar displaying the viewed/selected owned city's stocks, plus population and player gold.
 - Larger right-side command buttons inside the original panel artwork; corrected placement and selection redraws.
+- Fixes for duplicated buildings near units and the command-panel redraw freeze after rebuilding the button list (v0.3.2).
 - Larger, antialiased text. Public releases use **Dragon UI Bitmap**, derived from OFL-licensed Noto Sans CJK TC. The top bar uses the locally installed Windows font at runtime.
 - **cnc-ddraw borderless mode** with a 60 FPS presentation limit and easier Alt+Tab.
 - **Steam join-code multiplayer** without VPN software, IPX drivers or manual router forwarding.
@@ -33,7 +34,7 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 ## Install
 
 1. Close the game. If you installed an earlier full-fix pack, run its **Restore.cmd** first.
-2. Download **DragonFullFix-0.3.1-1080p-public-beta.zip** from [Releases](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases). GitHub's automatic **Source code** archives are for developers, not installation.
+2. Download **DragonFullFix-0.3.2-1080p-public-beta.zip** from [Releases](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases). GitHub's automatic **Source code** archives are for developers, not installation.
 3. In Steam, choose **Manage → Browse local files**. Extract the ZIP so the folder layout is:
 
    ```text
@@ -59,7 +60,7 @@ Modified or different executable/font files are rejected before installation. Re
 
 ### Updating and uninstalling
 
-Close the game and run **Restore.cmd**, then install the new pack. The new restore script can also read an unmodified 0.2/0.3 full-pack installation record if you extracted over the old package folder. Keep `modernization/history`: it holds your original files.
+Close the game and run **Restore.cmd**, then install the new pack. This also applies when updating from v0.3.1. The new restore script can read an unmodified older full-pack installation record if you extracted over the old package folder. Keep `modernization/history`: it holds your original files.
 
 Restore preserves saved games and your language choice. It stops if another mod changed an installed file. Use option 3 in **Language.cmd** to restore the previous language separately.
 
@@ -83,13 +84,14 @@ Steam can provide relay routing without router setup. Steam online is also requi
 | --- | --- |
 | Windows 11 / Steam / 1080p | Tested locally |
 | HUD, menus, minimaps and tooltips | Iteratively tested; final command-panel layout confirmed by user |
+| Building duplication / command-panel freeze | Corrections confirmed in local gameplay; regression tests added |
 | Two-PC multiplayer | User and friend confirmed play on the preceding adapter; protocol unchanged |
 | Public Noto-derived fonts | Build and raster tests; broader in-game validation pending |
 | Command delay | Reported for move/build/train; diagnostics added, **not claimed fixed** |
 | Native 4K / other aspect ratios | Not validated; this release is a 1080p profile |
 | 60 FPS | Presentation limit, not a guarantee of 60 simulation updates or minimum performance |
 
-The first public release is marked **beta** because of the public-font change and remaining coverage gaps. Your existing private 0.3 build need not be replaced just to share or inspect this repository.
+The release remains **beta** because broader public-font validation and other coverage gaps remain. v0.3.2 includes stability corrections beyond the original private 0.3 and public 0.3.1 builds.
 
 For multiplayer delay, play normally for at least a minute with both players connected, then attach relevant `DTNet.log` excerpts to an issue. The adapter records polling, queue and connection timing every ten seconds; it does not log chat, join codes or command payloads. Review logs before posting. Disconnect recovery and long, high-population matches need more testing.
 

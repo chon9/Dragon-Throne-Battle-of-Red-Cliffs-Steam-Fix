@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent
 parser=argparse.ArgumentParser()
 parser.add_argument('--previous',type=Path)
 args=parser.parse_args()
-ARCHIVE = ROOT / 'dist/DragonFullFix-0.3.1-1080p-public-beta.zip'
+ARCHIVE = ROOT / 'dist/DragonFullFix-0.3.2-1080p-public-beta.zip'
 FIXTURE = Path(tempfile.mkdtemp(prefix='full-fix-test-', dir=ROOT / 'builds'))
 with zipfile.ZipFile(ARCHIVE) as z:
     assert z.testzip() is None
@@ -80,7 +80,8 @@ for name, expected in original.items():
 for name in ('DTNet.dll', 'steam_api.dll'):
     assert not (FIXTURE / name).exists(), name
 assert not (FIXTURE / 'modernization/installed-full-fix.json').exists()
-# Exercise the documented 0.2 -> restore -> 0.3 path. The new Restore.cmd must
+# Exercise the documented previous release -> restore -> current release path.
+# The new Restore.cmd must
 # also work after a friend extracts over their old package folder.
 if args.previous:
     old = FIXTURE / 'old-package'
@@ -97,7 +98,7 @@ if args.previous:
 print('Exact installed file match, exact original restore, saved data preservation: PASS')
 print('Fixture retained:', FIXTURE)
 (ROOT / 'dist/verification.json').write_text(json.dumps({
-    'archive_sha256': digest(ARCHIVE), 'installer': 'Windows PowerShell 5.1',
+    'version': MANIFEST['version'], 'archive_sha256': digest(ARCHIVE), 'installer': 'Windows PowerShell 5.1',
     'checks': ['ZIP integrity', 'no full game executable or personal files',
                'unknown executable rejected before mutation', 'damaged payload rejected before mutation',
                'all installed files match public build manifest', 'repeat install rejected',
@@ -105,6 +106,8 @@ print('Fixture retained:', FIXTURE)
                'save and settings sentinels preserved', 'new DLLs removed on restore',
                'previous pack upgrade and byte-exact restore' if args.previous else 'previous pack upgrade not run'],
     'language': 'English assets and current Traditional Chinese registry value checked read-only; live switch not run',
-    'user_confirmed': ['two-PC multiplayer on previous adapter', 'revision 3 bottom-right panel'],
+    'user_confirmed': ['two-PC multiplayer on previous adapter', 'revision 3 bottom-right panel',
+                       'building duplication gone and unit selection correct on local origin fix',
+                       'continued gameplay and working buttons on local permanent freeze fix'],
     'pending': ['public Noto fonts in-game visual check', 'friend English UI visual check', 'measured command latency', 'native 4K'],
 }, indent=2))

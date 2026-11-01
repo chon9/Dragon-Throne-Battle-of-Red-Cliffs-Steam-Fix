@@ -58,6 +58,11 @@ def build(width, height, smooth_fonts=False, modern_hud=False):
     def immediate(va, old, new, reason):
         patch(va, u32(old), u32(new), reason)
 
+    origin_spec = importlib.util.spec_from_file_location('world_origin', ROOT / 'WorldOriginPatch.py')
+    origin = importlib.util.module_from_spec(origin_spec)
+    origin_spec.loader.exec_module(origin)
+    origin.apply(patch)
+
     def instruction_immediate(va, old, new, reason):
         decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
         decoder.detail = True
