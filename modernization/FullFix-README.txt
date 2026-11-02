@@ -1,4 +1,4 @@
-DRAGON THRONE - FULL FIX PACK 0.3.2 (1080p PUBLIC BETA)
+DRAGON THRONE - FULL FIX PACK 0.3.3 (1080p PUBLIC BETA)
 
 WHAT IS INCLUDED
 Native 1920x1080 gameplay with corrected HUD panels, minimaps, menus and tooltips;
@@ -10,6 +10,8 @@ enlarged right-side commands within the original artwork, and clean selection
 changes. v0.3.2 fixes duplicated buildings near units and a freeze when the
 command list is rebuilt with enlarged buttons. Both fixes were confirmed in
 local gameplay, including continued play and working command buttons.
+v0.3.3 also fixes the remaining freeze on appointment (Ren Ming), confirmed
+in local play with correct buttons and no freeze.
 The public build uses OFL-licensed Noto-derived Dragon UI Bitmap glyphs instead
 of the private Windows-derived bitmap fonts. Font raster tests passed; broader
 in-game visual validation of this font change is pending. See the source README
@@ -18,7 +20,7 @@ and THIRD_PARTY_NOTICES.md for licenses and test coverage.
 Project: https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix
 Optional support: https://ko-fi.com/chon9workshop
 
-UPDATING FROM AN EARLIER PACK (INCLUDING PUBLIC v0.3.1)
+UPDATING FROM AN EARLIER PACK (INCLUDING PUBLIC v0.3.2)
 Close the game. Run Restore.cmd from your existing DragonFullFix folder first,
 then extract this ZIP into the game folder and run Install.cmd. Keep the
 modernization/history folder: it contains the originals needed for restoration.

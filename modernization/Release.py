@@ -12,7 +12,7 @@ import pefile
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
-VERSION = '0.3.2'
+VERSION = '0.3.3'
 FONT_SHA = 'dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4'
 STEAM_SHA = '67ae11d71ae6ec404090094df1e47b614d27400dc53fa450023e6fbcf347902c'
 DDRAW_SHA = '85e0f7d530dfda134793a57cb3e76b0287dcc96892ee57162dd68f47283b03a9'
@@ -52,7 +52,7 @@ def main():
     (out/'payload').mkdir()
     manifest={'version':VERSION+'-public-beta','resolution':'1920x1080',
               'font':'Dragon UI Bitmap (Noto Sans CJK TC derivative; OFL-1.1)',
-              'status':'Building redraw and command-panel freeze fixes user confirmed on local build; public font visual coverage pending; latency diagnostics only','files':[]}
+              'status':'Building redraw and command-panel/appointment freeze fixes user confirmed on local build; public font visual coverage pending; latency diagnostics only','files':[]}
 
     def delta(name, original, updated):
         before,after=original.read_bytes(),updated.read_bytes()

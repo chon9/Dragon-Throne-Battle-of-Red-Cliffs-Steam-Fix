@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 — appointment freeze beta
+
+- Fix the remaining freeze when pressing「任命」(appoint). An action button without saved geometry could retain an enlarged rectangle and overrun its native background bitmap; v0.3.2 did not cover this case.
+- Check native button crop sizes against their background images, and arrange standard command buttons into separate native capture positions before enlarging them.
+- Add a regression for an untracked button with inherited enlarged dimensions. The tester confirmed appointment, correct buttons and no freeze with the permanent local fix.
+
 ## 0.3.2 — stability beta
 
 - Use the viewport's actual top edge when drawing overlapping buildings, units and effects. This corrects duplicated buildings below the taller resource bar.

@@ -172,6 +172,33 @@ static void PanelArtwork(void* artwork,void* target,Rect dest,int sx,int sy) {
     int bounds[]={0,0,1920,1080,1920*1080};
     reinterpret_cast<Blit>(v[3])(artwork,target,dest.x,dest.y,dest.w,dest.h,sx,sy,2,bounds);
 }
+static void PrepareNativeActions(void* panel,int count) {
+    // Appointment mode can introduce an untracked button with an enlarged
+    // rectangle. Its own background is authoritative for the native crop;
+    // do not rely exclusively on geometry saved under the control pointer.
+    bool compact=count<=8;
+    for(int i=0;i<count;++i) {
+        void* child=P(panel,0x78+i*4);if(!child)continue;
+        if(I(child,0)!=0x68d7c8){compact=false;continue;}
+        void* background=P(child,0x54);
+        if(!background||I(background,0)!=0x68a68c){compact=false;continue;}
+        int w=I(background,0xc),h=I(background,0x10);
+        if(w<1||h<1||w>64||h>64){compact=false;continue;}
+        Rect r=R(child);
+        if(r.w>w)r.w=w;
+        if(r.h>h)r.h=h;
+        SetRect(child,r);
+        if(r.w!=35||r.h!=35)compact=false;
+    }
+    // These native panels hold up to eight 35px buttons with 4px spacing.
+    // Rebuild their capture positions too: inherited modern positions or
+    // wrapping calculated with 80px hit widths can otherwise overlap icons.
+    if(compact)for(int i=0;i<count;++i) {
+        void* child=P(panel,0x78+i*4);if(!child)continue;
+        Rect r=R(child);r.x=I(panel,8)+1+(i%2)*39;r.y=I(panel,0xc)+1+(i/2)*39;
+        SetRect(child,r);
+    }
+}
 static int __fastcall DrawActions(void* panel,void*,void* target,void* clip) {
     if(!Mission(target))return OriginalActions(panel,target,clip);
     RestoreGeometry(panel);
@@ -180,6 +207,7 @@ static int __fastcall DrawActions(void* panel,void*,void* target,void* clip) {
     for(int i=0;i<count;++i){void* child=P(panel,0x78+i*4);if(child)RestoreGeometry(child);}
     Rect native=R(panel);
     if(native.x<1500 || native.w!=86 || native.h!=154)return OriginalActions(panel,target,clip);
+    PrepareNativeActions(panel,count);
     void* artwork=HudArtwork();
     // Transparent native button pixels must start on clean backing, not on a
     // previously enlarged icon left in this shared part of the render target.

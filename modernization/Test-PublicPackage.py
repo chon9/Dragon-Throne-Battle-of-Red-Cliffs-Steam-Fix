@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent
 parser=argparse.ArgumentParser()
 parser.add_argument('--previous',type=Path)
 args=parser.parse_args()
-ARCHIVE = ROOT / 'dist/DragonFullFix-0.3.2-1080p-public-beta.zip'
+ARCHIVE = ROOT / 'dist/DragonFullFix-0.3.3-1080p-public-beta.zip'
 FIXTURE = Path(tempfile.mkdtemp(prefix='full-fix-test-', dir=ROOT / 'builds'))
 with zipfile.ZipFile(ARCHIVE) as z:
     assert z.testzip() is None
@@ -108,6 +108,7 @@ print('Fixture retained:', FIXTURE)
     'language': 'English assets and current Traditional Chinese registry value checked read-only; live switch not run',
     'user_confirmed': ['two-PC multiplayer on previous adapter', 'revision 3 bottom-right panel',
                        'building duplication gone and unit selection correct on local origin fix',
-                       'continued gameplay and working buttons on local permanent freeze fix'],
+                       'continued gameplay and working buttons on local permanent freeze fix',
+                       'appointment works, buttons correct and no freeze on local permanent appointment fix'],
     'pending': ['public Noto fonts in-game visual check', 'friend English UI visual check', 'measured command latency', 'native 4K'],
 }, indent=2))

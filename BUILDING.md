@@ -37,7 +37,7 @@ python modernization/Test-PublicPackage.py
 
 Check each command succeeds before continuing. Font generation may take several minutes. `Release.py` verifies the Noto source/atlas hashes, generates the modern 1080p executable, redirects the three COM imports to DTNet, and creates compressed deltas plus a reversible installer in `modernization/dist/`. It refuses an existing version staging directory to avoid stale source/dependency files; use a fresh checkout or a new release version for a rebuild.
 
-`Test-PublicPackage.py` uses a separate temporary game fixture, verifies all installed output hashes, rejects altered inputs, checks exact rollback, and preserves save/settings sentinels. Pass `--previous path/to/DragonFullFix-0.3.1-1080p-public-beta.zip` to additionally test upgrading from the preceding public release through Restore and Install.
+`Test-PublicPackage.py` uses a separate temporary game fixture, verifies all installed output hashes, rejects altered inputs, checks exact rollback, and preserves save/settings sentinels. Pass `--previous path/to/DragonFullFix-0.3.2-1080p-public-beta.zip` to additionally test upgrading from the preceding public release through Restore and Install.
 
 ## Source map
 
@@ -55,6 +55,6 @@ Check each command succeeds before continuing. Font generation may take several 
 
 ## What tests establish
 
-The C++ build runs protocol validation, timing statistics, action geometry/transparent backing, command-list rebuild freeze regressions, isolated provider state tests, and execution of all five x86 world-origin replacements. The font test covers RGB565 compositing, clipping, transparent pixels and balanced surface locks. These are local regression tests, not proof of live multiplayer timing, every UI state, English text fit or 4K compatibility.
+The C++ build runs protocol validation, timing statistics, action geometry/transparent backing, command-list rebuild and untracked appointment-button freeze regressions, isolated provider state tests, and execution of all five x86 world-origin replacements. The font test covers RGB565 compositing, clipping, transparent pixels and balanced surface locks. These are local regression tests, not proof of live multiplayer timing, every UI state, English text fit or 4K compatibility.
 
 The game still owns its simulation, game data and artwork. Hard-coded addresses and 1080p geometry intentionally support one executable only. A configurable mod API, offline LAN and reconnect support are future work.

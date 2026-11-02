@@ -40,7 +40,7 @@ if ($Action -eq 'restore') {
     return
 }
 if (Test-Path -LiteralPath $statePath) { throw 'This package is already installed. Use Restore.cmd before reinstalling.' }
-foreach ($name in @('installed-native.json','installed-network.json','installed-modern-hud.json','installed-world-origin.json','installed-hud-hang-fix.json')) {
+foreach ($name in @('installed-native.json','installed-network.json','installed-modern-hud.json','installed-world-origin.json','installed-hud-hang-fix.json','installed-appointment-fix.json')) {
     if (Test-Path -LiteralPath (Join-Path $modern $name)) { throw 'An earlier separate patch is installed. Restore it with its original installer before using this combined package.' }
 }
 $manifest=Get-Content -LiteralPath (Join-Path $PSScriptRoot 'manifest.json') -Raw | ConvertFrom-Json
