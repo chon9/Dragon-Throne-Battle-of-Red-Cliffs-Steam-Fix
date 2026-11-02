@@ -15,7 +15,8 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 - Larger, antialiased text. Public releases use **Dragon UI Bitmap**, derived from OFL-licensed Noto Sans CJK TC. The top bar uses the locally installed Windows font at runtime.
 - **cnc-ddraw borderless mode** with a 60 FPS presentation limit and easier Alt+Tab.
 - **Steam join-code multiplayer** without VPN software, IPX drivers or manual router forwarding.
-- English / Traditional Chinese language selector, file verification, backups and rollback.
+- Guided **Install.cmd / Update.cmd**: automatically reverse an older full-fix pack, choose display output, English / Traditional Chinese, and whether to skip opening videos.
+- Verified staging, original backups, failed-update rollback and **Recover.cmd** for interrupted operations.
 
 ## Screenshots
 
@@ -33,8 +34,8 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 
 ## Install
 
-1. Close the game. If you installed an earlier full-fix pack, run its **Restore.cmd** first.
-2. Download **DragonFullFix-0.3.3-1080p-public-beta.zip** from [Releases](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases). GitHub's automatic **Source code** archives are for developers, not installation.
+1. Save and close the game. **You do not need to manually restore an earlier combined full-fix pack.**
+2. Download **DragonFullFix-0.4.0-1080p-public-beta.zip** from [Releases](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases). GitHub's automatic **Source code** archives are for developers, not installation.
 3. In Steam, choose **Manage → Browse local files**. Extract the ZIP so the folder layout is:
 
    ```text
@@ -42,12 +43,14 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
      dragonthrone.exe
      DragonFullFix/
        Install.cmd
+       Update.cmd
        Restore.cmd
+       Recover.cmd
        Language.cmd
    ```
 
-4. Run **DragonFullFix/Install.cmd** and wait for the success message. Do not copy files out of `payload` manually.
-5. Optionally run **Language.cmd** to choose English or Traditional Chinese.
+4. Run **DragonFullFix/Install.cmd** (or **Update.cmd**, which opens the same wizard). Choose output resolution, language, and the opening-video option. Press Enter for **automatic desktop output**, **keep current language**, and **skip videos Off**.
+5. Wait for **Setup complete**. The installer verifies the new payload and old backups, automatically reverses the recorded older patch, and installs the new one. Do not copy files out of `payload` manually.
 6. Launch through **Steam**. Select the game's **1024 × 768** setting: this legacy option now selects **1920 × 1080 during missions**. The main menu retains its legacy layout.
 
 The installer supports one exact original Steam executable, SHA-256:
@@ -56,17 +59,32 @@ The installer supports one exact original Steam executable, SHA-256:
 5f31d5ac6080a54649580ef6ce30cdb748e72919a54475a0342b8c3f8bf58444
 ```
 
-Modified or different executable/font files are rejected before installation. Restore other HD/native/network mods using their own installers first. If Steam updates the game, wait for a compatible patch rather than bypassing hash checks. Allow about 250 MB for staging and backups. Players do not need Python or a compiler.
+Modified or different executable/font files are rejected before installation. Restore other HD/native/network mods using their own installers first. If Steam updates the game, wait for a compatible patch rather than bypassing hash checks. Allow at least 1 GB free for staging and rollback snapshots; retained update history grows with each installation. Players do not need Python or a compiler.
 
 ### Updating and uninstalling
 
-Close the game and run **Restore.cmd**, then install the new pack. This also applies when updating from v0.3.2. The new restore script can read an unmodified older full-pack installation record if you extracted over the old package folder. Keep `modernization/history`: it holds your original files.
+Close the game, extract the new ZIP into the same game folder, replacing the old `DragonFullFix` package folder, then run **Install.cmd** or **Update.cmd**. Keep `modernization/history` and `modernization/installed-full-fix.json`: they identify and preserve your original files. Automatic upgrade is tested from the private **0.2 / 0.3** friend packs and public **0.3.3**. Earlier public packs use the same record format. This is a local package updater; it does not download releases in the background.
 
-Restore preserves saved games and your language choice. It stops if another mod changed an installed file. Use option 3 in **Language.cmd** to restore the previous language separately.
+The updater stages and verifies new files **before** reversing the old patch. A failed operation attempts to restore the previous installed version and its preferences. If the updater was interrupted, run **Recover.cmd**, then rerun the wizard. Changed game files, missing/corrupt backups and unrelated layered mods are protected and block automatic updates; keep the diagnostic message and backups instead of bypassing the checks.
+
+Run **Restore.cmd** to remove the full-fix pack and return to the files saved before the first combined installation. It also re-enables opening videos disabled by this installer. Saves, personal game settings and the language choice are preserved. Language has a separate backup; use option 3 in **Language.cmd** to restore it.
+
+### Resolution and opening videos
+
+- **Automatic desktop** (default): borderless fullscreen at your current desktop size.
+- **1920 × 1080 / 2560 × 1440 / 3840 × 2160**: a borderless window at the chosen output size. The wizard only shows sizes that fit the primary monitor; it does not change Windows display resolution.
+- Missions and the corrected HUD still render internally at **1920 × 1080**. Larger outputs scale that image; this is **not native 1440p/4K rendering**. A desktop of at least 1920 × 1080 is required. Scaled output needs broader visual testing. The renderer's [pinned configuration/source](https://github.com/FunkyFr3sh/cnc-ddraw/blob/v7.1.0.0/src/dd.c) defines these output-size limits.
+- **Skip opening videos: Off by default** means opening videos play. Choose **On** to go straight to the menu and avoid the buggy startup playback. Only `DATA/Fod.avi` and `DATA/gpmom.avi` are renamed to `.disabled-by-dragonfix`; no video is deleted, and campaign videos are left alone. Choose Off on a subsequent run, or use Restore.cmd, to put them back.
+
+Run the wizard again to change preferences; Enter always selects the defaults, including videos Off, rather than silently retaining the previous choices. Advanced noninteractive use:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\DragonFullFix\Setup.ps1 -GameDirectory . -NonInteractive -Resolution Desktop -Language English -SkipVideos On
+```
 
 ### Language
 
-Each player chooses their language independently. The game already supplies the translated resources; this patch does not add translated voices. The selector needs administrator access only for the game's legacy 32-bit registry language value. Installation itself does not force a language or change Steam's client language. If elevation is declined, use Steam's game language setting instead. Long English text still needs broader visual testing.
+Each player chooses their language independently. The game already supplies the translated resources; this patch does not add translated voices. The selector needs administrator access only for the game's legacy 32-bit registry language value. Keeping the current language requires no elevation. An explicit language selection runs after the file update; if elevation is declined or the language switch fails, the patch stays installed and setup reports the incomplete language step. Retry with Language.cmd or use Steam's game language setting. The switcher does not change Steam's client language. Long English text still needs broader visual testing.
 
 ## Play with a friend
 
@@ -88,10 +106,11 @@ Steam can provide relay routing without router setup. Steam online is also requi
 | Two-PC multiplayer | User and friend confirmed play on the preceding adapter; protocol unchanged |
 | Public Noto-derived fonts | Build and raster tests; broader in-game validation pending |
 | Command delay | Reported for move/build/train; diagnostics added, **not claimed fixed** |
-| Native 4K / other aspect ratios | Not validated; this release is a 1080p profile |
+| Resolution choices | 1080p internal HUD; desktop / 1080p / 1440p / 4K output configuration tested; scaled visuals pending |
+| Native 4K / other aspect ratios | Not implemented or validated |
 | 60 FPS | Presentation limit, not a guarantee of 60 simulation updates or minimum performance |
 
-The release remains **beta** because broader public-font validation and other coverage gaps remain. v0.3.3 includes the appointment freeze correction in addition to the v0.3.2 stability fixes.
+The release remains **beta** because broader public-font validation and other coverage gaps remain. v0.4.0 adds guided updates and video selection while retaining the v0.3.3 gameplay fixes; the network protocol and command timing are unchanged.
 
 For multiplayer delay, play normally for at least a minute with both players connected, then attach relevant `DTNet.log` excerpts to an issue. The adapter records polling, queue and connection timing every ten seconds; it does not log chat, join codes or command payloads. Review logs before posting. Disconnect recovery and long, high-population matches need more testing.
 

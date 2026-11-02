@@ -33,11 +33,14 @@ python modernization/network/Build.py
 python modernization/Build-SmoothFonts.py --test
 python modernization/Release.py
 python modernization/Test-PublicPackage.py
+python modernization/Test-Updater.py --previous modernization/dist/DragonFullFix-0.3.3-1080p-public-beta.zip
 ```
 
 Check each command succeeds before continuing. Font generation may take several minutes. `Release.py` verifies the Noto source/atlas hashes, generates the modern 1080p executable, redirects the three COM imports to DTNet, and creates compressed deltas plus a reversible installer in `modernization/dist/`. It refuses an existing version staging directory to avoid stale source/dependency files; use a fresh checkout or a new release version for a rebuild.
 
 `Test-PublicPackage.py` uses a separate temporary game fixture, verifies all installed output hashes, rejects altered inputs, checks exact rollback, and preserves save/settings sentinels. Pass `--previous path/to/DragonFullFix-0.3.2-1080p-public-beta.zip` to additionally test upgrading from the preceding public release through Restore and Install.
+
+`Test-Updater.py` exercises the shipped guided updater, including automatic reversal of older combined packs, all output settings, video renames, default choices, modified-file protection, a deliberately failed update and recovery after killing the updater. Repeat `--previous` to test multiple old ZIPs (including the private 0.2/0.3 friend packs if available locally). Language prompt routing uses a fixture-only stub: the test never changes the machine registry. An actual elevated language switch and scaled-output visuals still need user testing. Test fixtures are retained under the ignored `modernization/builds/` directory.
 
 ## Source map
 
@@ -50,7 +53,8 @@ Check each command succeeds before continuing. Font generation may take several 
 | `modernization/network/DTNet.cpp` | DirectPlay4 adapter using Steam lobbies and reliable messages |
 | `modernization/network/Protocol.h` | Session/player packet validation and join codes |
 | `modernization/network/LatencyStats.h` | Diagnostic timing windows; no simulation scheduling changes |
-| `modernization/FullFix-Install.ps1` | Payload/hash checks, staging, backups and rollback |
+| `modernization/FullFix-Setup.ps1` | Guided resolution/language/video choices and update orchestration |
+| `modernization/FullFix-Install.ps1` | Payload/hash checks, automatic old-pack reversal, staging, transaction snapshots, video renames and recovery |
 | `modernization/FullFix-Language.ps1` | Existing English/Traditional Chinese resource selection |
 
 ## What tests establish

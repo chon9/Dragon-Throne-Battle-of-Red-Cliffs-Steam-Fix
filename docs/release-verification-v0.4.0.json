@@ -1,0 +1,30 @@
+{
+  "version": "0.4.0-public-beta",
+  "archive_sha256": "0f5f6bce960d48af008ad5f1feb206405b1733f793dc07bf8fc400aa0cb21aac",
+  "installer": "Windows PowerShell 5.1",
+  "checks": [
+    "ZIP integrity; no full executables, personal files or proprietary SDK/assets",
+    "Unknown executable refused before mutation",
+    "Damaged fresh-install payload refused before mutation",
+    "Guided defaults install exactly the manifest; videos default Off; saves preserved",
+    "1080p/1440p/4K output settings and repeated skip On/Off changes are reversible",
+    "Restore removes new DLLs and re-enables opening videos byte-for-byte; duplicate video names are protected",
+    "Automatic upgrade and exact original restore: DragonFullFix-0.2-1080p-friend-test.zip; damaged payload/backup and changed runtime protected",
+    "Automatic upgrade and exact original restore: DragonFullFix-0.3-1080p-modern-hud.zip; damaged payload/backup and changed runtime protected",
+    "Automatic upgrade and exact original restore: DragonFullFix-0.3.3-1080p-public-beta.zip; damaged payload/backup and changed runtime protected",
+    "Late installation failure restores the previous patched files, record and video filenames",
+    "Killed updater leaves a recovery journal; Recover restores the previous installation and videos",
+    "Interactive invalid-choice retry, English/Traditional Chinese preflight and switch routing (registry stub only)",
+    "Pressing Enter through all prompts uses desktop output, current language and videos Off",
+    "Shipped Update.cmd and Restore.cmd complete successfully from a path containing spaces"
+  ],
+  "pending": [
+    "Visual validation of scaled 1440p/4K output",
+    "Live elevated language switch; routing tested with registry stub",
+    "Public Noto fonts and long English UI visual coverage",
+    "Measured command latency",
+    "Native 4K HUD"
+  ],
+  "notes": "No live installation, registry, save or Steam settings changed by these fixture tests.",
+  "language_read_only": "English and Traditional Chinese resources and current registry value verified on local Steam installation; current language unchanged"
+}

@@ -2,7 +2,8 @@ param(
     [ValidateSet('English','TraditionalChinese','Restore')][string]$Language,
     [string]$GameDirectory=(Split-Path -Parent $PSScriptRoot),
     [switch]$Elevated,
-    [switch]$CheckOnly
+    [switch]$CheckOnly,
+    [switch]$NoPause
 )
 $ErrorActionPreference='Stop'
 $env:PSModulePath=(Join-Path $PSHOME 'Modules')+';'+$env:PSModulePath
@@ -41,7 +42,8 @@ if (!$principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
     if ($Elevated) { throw 'Administrator access was not granted.' }
     Write-Host 'Windows will request administrator access to change this legacy game language setting.'
     $arguments='-NoProfile -ExecutionPolicy Bypass -File "'+$PSCommandPath+'" -Language '+$Language+' -GameDirectory "'+$game+'" -Elevated'
-    $child=Start-Process powershell.exe -ArgumentList $arguments -Verb RunAs -Wait -PassThru
+    if ($NoPause) { $arguments+=' -NoPause' }
+    $child=Start-Process powershell.exe -ArgumentList $arguments -Verb RunAs -Wait -PassThru -WindowStyle Hidden
     if ($child.ExitCode -ne 0) { throw 'Language switch did not complete.' }
     return
 }
@@ -71,4 +73,4 @@ try {
 if ($Language -eq 'Restore') { Remove-Item -LiteralPath $statePath }
 Write-Output "Game text language set to: $value. Launch from Steam."
 Write-Output 'If Steam resets it later, choose the same language under Steam game Properties > General > Language.'
-if ($Elevated) { Read-Host 'Press Enter to close' | Out-Null }
+# The parent CMD owns the interactive console and pause; the elevated helper stays hidden.

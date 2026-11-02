@@ -12,7 +12,7 @@ import pefile
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
-VERSION = '0.3.3'
+VERSION = '0.4.0'
 FONT_SHA = 'dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4'
 STEAM_SHA = '67ae11d71ae6ec404090094df1e47b614d27400dc53fa450023e6fbcf347902c'
 DDRAW_SHA = '85e0f7d530dfda134793a57cb3e76b0287dcc96892ee57162dd68f47283b03a9'
@@ -86,10 +86,12 @@ def main():
         path='payload/'+name;shutil.copy2(source,out/path)
         manifest['files'].append({'name':name,'kind':'copy','payload':path,'payloadSha256':sha(source),'after':sha(source)})
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-    for source,name in [('FullFix-Install.ps1','Install.ps1'),('FullFix-Language.ps1','Language.ps1'),('FullFix-README.txt','README.txt')]:
+    for source,name in [('FullFix-Install.ps1','Install.ps1'),('FullFix-Setup.ps1','Setup.ps1'),('FullFix-Language.ps1','Language.ps1'),('FullFix-README.txt','README.txt')]:
         shutil.copy2(ROOT/source,out/name)
-    for action in ('Install','Restore'):
-        (out/(action+'.cmd')).write_text('@echo off\npowershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Install.ps1" -Action '+action.lower()+' -GameDirectory "%~dp0.."\nif errorlevel 1 echo Operation failed. Read the error above.\npause\n')
+    for action in ('Install','Update','Restore','Recover'):
+        script='Setup.ps1' if action in ('Install','Update') else 'Install.ps1'
+        params='' if script=='Setup.ps1' else ' -Action '+action.lower()
+        (out/(action+'.cmd')).write_text('@echo off\npowershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0'+script+'"'+params+' -GameDirectory "%~dp0.."\nset "result=%errorlevel%"\nif not "%result%"=="0" echo Operation did not complete. Read the error above.\npause\nexit /b %result%\n')
     (out/'Language.cmd').write_text('@echo off\npowershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Language.ps1" -GameDirectory "%~dp0.."\npause\n')
     (out/'Launch-Steam.cmd').write_text('@echo off\nstart "" "steam://rungameid/2633500"\n')
     for name in ('LICENSE','THIRD_PARTY_NOTICES.md'):

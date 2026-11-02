@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 — guided update beta
+
+- Add Install.cmd / Update.cmd choices for borderless output size, current/English/Traditional Chinese language, and opening videos (skip defaults to Off). The HUD remains native 1080p; larger outputs are scaled.
+- Automatically verify and reverse an existing combined pack before applying the new payload, preserving saves and original backups.
+- Stage all outputs before mutation, restore the previous installation on failure, and provide Recover.cmd for interrupted updates.
+- Reversibly skip only the two opening videos, using the game's normal missing-video path. Startup skip was confirmed locally to go straight to the menu.
+- Keep the v0.3.3 gameplay runtime and network protocol. No new input-delay fix is claimed.
+
 ## 0.3.3 — appointment freeze beta
 
 - Fix the remaining freeze when pressing「任命」(appoint). An action button without saved geometry could retain an enlarged rectangle and overrun its native background bitmap; v0.3.2 did not cover this case.

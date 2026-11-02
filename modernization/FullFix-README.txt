@@ -1,4 +1,4 @@
-DRAGON THRONE - FULL FIX PACK 0.3.3 (1080p PUBLIC BETA)
+DRAGON THRONE - FULL FIX PACK 0.4.0 (1080p PUBLIC BETA)
 
 WHAT IS INCLUDED
 Native 1920x1080 gameplay with corrected HUD panels, minimaps, menus and tooltips;
@@ -20,13 +20,19 @@ and THIRD_PARTY_NOTICES.md for licenses and test coverage.
 Project: https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix
 Optional support: https://ko-fi.com/chon9workshop
 
-UPDATING FROM AN EARLIER PACK (INCLUDING PUBLIC v0.3.2)
-Close the game. Run Restore.cmd from your existing DragonFullFix folder first,
-then extract this ZIP into the game folder and run Install.cmd. Keep the
-modernization/history folder: it contains the originals needed for restoration.
-The new Restore.cmd can also restore an unmodified older full-pack installation if you
-already extracted over the old package. Saves and language choice are preserved.
-Do not copy payload files manually or install over an active older patch.
+UPDATING FROM AN EARLIER COMBINED PACK
+Save and close the game. Extract this ZIP into the game folder, replacing the
+old DragonFullFix package folder. Run Install.cmd or Update.cmd: both open the
+same guided wizard. It automatically restores the recorded original files
+before applying the new patch. Do not manually run Restore.cmd first.
+Keep modernization/history and installed-full-fix.json: these are required for
+safe updates and restoring originals. Tested from friend packs 0.2 / 0.3 and
+public 0.3.3. This wizard installs the downloaded pack; it does not download it.
+The new payload and original backups are verified before reversing the old pack.
+A failed update attempts to restore the previous installed version. If the
+operation was interrupted, run Recover.cmd, then try the wizard again.
+Modified files, bad backups and separate layered mods stop the update safely.
+Do not delete backups or bypass errors; keep the error message for support.
 
 REQUIREMENTS
 Each player needs their own Steam copy of Dragon Throne: Battle of Red Cliffs,
@@ -34,18 +40,26 @@ Windows, and an online Steam account. This pack targets the original Steam
 executable SHA256 5f31d5ac6080a54649580ef6ce30cdb748e72919a54475a0342b8c3f8bf58444.
 Different builds or modified executable/font files are refused before changes.
 No Python, compiler, VPN, IPX driver, or DirectPlay component is needed to play.
-Allow about 250 MB free for patch staging and backups.
+Allow at least 1 GB free for staging and rollback snapshots. Update history
+is retained and grows over time.
 
 INSTALL
-1. Close the game. Start with the original Steam build, without another HD mod.
+1. Close the game. Use the original supported Steam build or an earlier combined
+   full-fix pack. Other HD mods must be restored with their own installer first.
 2. In Steam, right-click the game > Manage > Browse local files.
 3. Extract the ZIP so the DragonFullFix folder is INSIDE that game folder:
        ...\Dragon Throne - Battle of Red Cliffs\dragonthrone.exe
        ...\Dragon Throne - Battle of Red Cliffs\DragonFullFix\Install.cmd
    Avoid an extra nested folder. Do not manually copy files from payload.
-4. Double-click DragonFullFix\Install.cmd and wait for "All fixes installed".
-   It saves your previous files under modernization\history\full-fix-... .
-5. Optional: run Language.cmd and choose English or Traditional Chinese.
+4. Double-click DragonFullFix\Install.cmd (or Update.cmd) and choose:
+   - Output: automatic desktop borderless, or a fixed borderless window at
+     1920x1080 / 2560x1440 / 3840x2160. Sizes above your monitor are hidden.
+   - Language: keep current, English, or Traditional Chinese.
+   - Skip opening videos: Off by default (videos play), or On (straight to menu).
+   Enter chooses the defaults: automatic desktop, current language, skip Off.
+5. Wait for "Setup complete". Backups go under modernization\history.
+   Windows may ask for admin access for an explicit language change. If denied,
+   the patch stays installed; use Language.cmd later to complete that step.
 6. Start from Steam (or Launch-Steam.cmd). In game settings select 1024 x 768.
    That legacy option now activates native 1920 x 1080 during missions.
    The main menu may still use its original aspect ratio. Alt+Tab is supported.
@@ -53,7 +67,8 @@ INSTALL
 LANGUAGE
 The game already includes English and Traditional Chinese resources. The pack
 does not replace them or force the host's language onto the friend. Installation
-keeps your current language. Language.cmd lets each player choose independently.
+keeps your current language by default. The wizard or Language.cmd lets each
+player choose independently.
 Close the game before switching. Windows asks for administrator access because
 the original game reads its language from the 32-bit machine registry. Only the
 game's Language value is changed; the first previous value is saved. Option 3
@@ -95,16 +110,26 @@ unverified. The new larger commands should also be checked in your next match.
 
 RESTORE
 Close the game and double-click Restore.cmd. It restores exactly the files
-saved before installing this pack, and removes DLLs that were newly added.
+saved before the first combined pack, and removes DLLs that were newly added.
+Opening videos disabled by the wizard are also restored.
 It preserves saves and your language choice. Use Language.cmd option 3 if you
 also want the prior language back. Keep modernization\history until restoration
 is complete. Changed files are protected: restoration stops if another mod or
 Steam update changed an installed file. Do not layer the older separate native
 or multiplayer installers over this pack.
 
+RESOLUTION AND VIDEO OPTIONS
+The modern HUD still renders at 1920x1080. 1440p and 4K output scale that image;
+they do not enable a native 4K layout. Your desktop must be at least 1920x1080.
+The wizard changes renderer settings, not Windows display resolution. Scaled
+output settings are tested; their in-game appearance needs broader testing.
+Run the wizard again to change choices. Enter always uses the defaults.
+Skip On renames DATA/Fod.avi and DATA/gpmom.avi with the suffix
+.disabled-by-dragonfix. The files are preserved, not deleted. Campaign videos
+are untouched. Skip Off or Restore.cmd re-enables these opening videos.
+
 STATUS AND CONTENTS
-The tested profile is 1080p, not a validated native 4K build. On another display
-the renderer may scale the 1080p image. 60 FPS is the configured display limit,
+The tested native profile is 1080p, not a validated native 4K build. 60 FPS is the configured display limit,
 not a guarantee of 60 unique simulation frames under all workloads.
 This is an experimental combined fix, not a promise to fix every original bug.
 Save games, personal settings/progress, logs and full game files are not bundled.

@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent
 parser=argparse.ArgumentParser()
 parser.add_argument('--previous',type=Path)
 args=parser.parse_args()
-ARCHIVE = ROOT / 'dist/DragonFullFix-0.3.3-1080p-public-beta.zip'
+ARCHIVE = ROOT / 'dist/DragonFullFix-0.4.0-1080p-public-beta.zip'
 FIXTURE = Path(tempfile.mkdtemp(prefix='full-fix-test-', dir=ROOT / 'builds'))
 with zipfile.ZipFile(ARCHIVE) as z:
     assert z.testzip() is None
