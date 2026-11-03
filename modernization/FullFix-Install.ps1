@@ -104,7 +104,7 @@ if (Test-Path -LiteralPath $statePath) {
         $oldFiles[$e.name]=$e
     }
 } elseif ($Action -eq 'restore') { throw 'No full-fix installation is recorded here.' }
-foreach ($name in @('installed-native.json','installed-network.json','installed-modern-hud.json','installed-world-origin.json','installed-hud-hang-fix.json','installed-appointment-fix.json','installed-startup-videos.json')) {
+foreach ($name in @('installed-native.json','installed-network.json','installed-modern-hud.json','installed-world-origin.json','installed-hud-hang-fix.json','installed-appointment-fix.json','installed-startup-videos.json','installed-renderer-hud.json','installed-classic-hud.json')) {
     if (Test-Path -LiteralPath (Join-Path $modern $name)) { throw 'An earlier separate patch is installed. Restore it with its original installer before using this combined package.' }
 }
 function Baseline($name) {

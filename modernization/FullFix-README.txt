@@ -1,21 +1,23 @@
-DRAGON THRONE - FULL FIX PACK 0.4.0 (1080p PUBLIC BETA)
+DRAGON THRONE - FULL FIX PACK 0.4.1 (1080p PUBLIC BETA)
+
+CLASSIC HUD AND WORLD-GAP FIX - 0.4.1
+The original 20px top bar, resource popup and original-size command buttons
+return. Runtime HUD replacement, the experimental enlarged renderer HUD and
+F8 remapping are not included. Native 1080p gameplay, separated panels, smooth
+text, borderless mode, Steam join codes and the guided updater are retained.
+
+Units and selection outlines no longer disappear in the open bottom middle
+area when the mouse crosses a HUD panel. The user confirmed this in gameplay.
+World geometry remains full-height; input checks protect the actual panels.
+Long-session stability on the friend's PC remains unconfirmed. This is not a
+guaranteed fix for every freeze, and multiplayer command delay is not fixed.
 
 WHAT IS INCLUDED
-Native 1920x1080 gameplay with corrected HUD panels, minimaps, menus and tooltips;
-the fixed left HUD edge and working right command buttons; larger smooth text;
-cnc-ddraw borderless mode with a 60 FPS limit; and Steam join-code multiplayer.
-English / Traditional Chinese selector, backups, and Restore.cmd are included.
-This version adds a larger unified resource bar with selected-city stocks,
-enlarged right-side commands within the original artwork, and clean selection
-changes. v0.3.2 fixes duplicated buildings near units and a freeze when the
-command list is rebuilt with enlarged buttons. Both fixes were confirmed in
-local gameplay, including continued play and working command buttons.
-v0.3.3 also fixes the remaining freeze on appointment (Ren Ming), confirmed
-in local play with correct buttons and no freeze.
-The public build uses OFL-licensed Noto-derived Dragon UI Bitmap glyphs instead
-of the private Windows-derived bitmap fonts. Font raster tests passed; broader
-in-game visual validation of this font change is pending. See the source README
-and THIRD_PARTY_NOTICES.md for licenses and test coverage.
+Native 1920x1080 gameplay with original-style HUD controls; larger smooth text;
+cnc-ddraw borderless mode with a 60 FPS limit; Steam join-code multiplayer;
+resolution, language and opening-video choices; backups and recovery commands.
+The public fonts are OFL-licensed Noto-derived Dragon UI Bitmap. The opening
+videos are skipped only if you select On; the wizard still defaults to Off.
 
 Project: https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix
 Optional support: https://ko-fi.com/chon9workshop
@@ -27,7 +29,8 @@ same guided wizard. It automatically restores the recorded original files
 before applying the new patch. Do not manually run Restore.cmd first.
 Keep modernization/history and installed-full-fix.json: these are required for
 safe updates and restoring originals. Tested from friend packs 0.2 / 0.3 and
-public 0.3.3. This wizard installs the downloaded pack; it does not download it.
+public 0.3.3 in the earlier updater; v0.4.0 upgrade tested for this release.
+This wizard installs the downloaded pack; it does not download it.
 The new payload and original backups are verified before reversing the old pack.
 A failed update attempts to restore the previous installed version. If the
 operation was interrupted, run Recover.cmd, then try the wizard again.
@@ -100,13 +103,13 @@ reconnection are not implemented.
 
 MULTIPLAYER STATUS AND DELAY CHECK
 The host and friend confirmed multiplayer works with the previous adapter.
-This update adds timing diagnostics; it does not claim to fix command delay.
+Timing diagnostics are retained; this update does not claim to fix command delay.
 During a two-player session, play normally for a minute and try move, build and
 train commands. DTNet.log beside dragonthrone.exe records connection and queue
 timings every ten seconds, without chat, join codes or command payloads.
 Keep that log for troubleshooting if commands still feel delayed.
 Measured command latency, long matches and recovery after disconnect remain
-unverified. The new larger commands should also be checked in your next match.
+unverified. Check the restored original-size commands in your next match.
 
 RESTORE
 Close the game and double-click Restore.cmd. It restores exactly the files
@@ -119,7 +122,7 @@ Steam update changed an installed file. Do not layer the older separate native
 or multiplayer installers over this pack.
 
 RESOLUTION AND VIDEO OPTIONS
-The modern HUD still renders at 1920x1080. 1440p and 4K output scale that image;
+The widescreen HUD still renders at 1920x1080. 1440p and 4K output scale that image;
 they do not enable a native 4K layout. Your desktop must be at least 1920x1080.
 The wizard changes renderer settings, not Windows display resolution. Scaled
 output settings are tested; their in-game appearance needs broader testing.

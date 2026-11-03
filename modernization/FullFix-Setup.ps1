@@ -18,13 +18,14 @@ $game=(Resolve-Path -LiteralPath $GameDirectory).Path
 if (!(Test-Path -LiteralPath (Join-Path $game 'dragonthrone.exe'))) { throw 'Extract DragonFullFix beside dragonthrone.exe, then run Install.cmd.' }
 Write-Host 'Dragon Throne - install / automatic update'
 Write-Host 'Close the game first. Saves and progress are preserved.'
+Write-Host 'Classic HUD test build: original resource popup and button sizes; runtime HUD replacement removed.'
 if (Test-Path -LiteralPath (Join-Path $game 'modernization/installed-full-fix.json')) {
     $old=Get-Content -LiteralPath (Join-Path $game 'modernization/installed-full-fix.json') -Raw | ConvertFrom-Json
     Write-Host "Detected installed pack: $($old.version). Its original backups will be restored automatically before applying this pack."
 }
 if (!$NonInteractive) {
     Write-Host ''
-    Write-Host 'OUTPUT RESOLUTION (the game and modern HUD render at 1920 x 1080)'
+    Write-Host 'OUTPUT RESOLUTION (the game and widescreen HUD render at 1920 x 1080)'
     Write-Host '1. Automatic desktop size, borderless fullscreen [default]'
     $choices=@{'1'='Desktop'}
     $bounds=$null
@@ -33,7 +34,7 @@ if (!$NonInteractive) {
         [DragonSetupDpi]::SetProcessDPIAware() | Out-Null
         Add-Type -AssemblyName System.Windows.Forms; $bounds=[Windows.Forms.Screen]::PrimaryScreen.Bounds
     } catch { }
-    if ($bounds -and ($bounds.Width -lt 1920 -or $bounds.Height -lt 1080)) { throw 'This modern HUD pack needs a desktop of at least 1920 x 1080. Smaller native layouts are not supported yet. No changes made.' }
+    if ($bounds -and ($bounds.Width -lt 1920 -or $bounds.Height -lt 1080)) { throw 'This HUD pack needs a desktop of at least 1920 x 1080. Smaller native layouts are not supported yet. No changes made.' }
     $n=2
     foreach ($size in @('1920x1080','2560x1440','3840x2160')) {
         $w,$h=$size.Split('x')

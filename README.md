@@ -1,6 +1,10 @@
 # Dragon Throne: Battle of Red Cliffs — Steam Fix
 
-A community patch for the Windows Steam edition: native 1080p gameplay, clearer HUD and text, borderless Alt+Tab, and multiplayer through Steam join codes.
+A community patch for the Windows Steam edition: native 1080p gameplay, smoother text, borderless Alt+Tab, and multiplayer through Steam join codes.
+
+**Latest release: v0.4.1 beta — classic HUD and world-gap fix.** Removes the runtime HUD replacement from v0.4.0 and keeps the original resource popup and command-button sizes. Units and drag-selection outlines now remain visible in the open space between the bottom panels, including when the cursor crosses a panel. This correction was confirmed in local gameplay. Long-session stability on the friend's PC remains unconfirmed.
+
+The experimental enlarged HUD and its F8/input remapping are not included.
 
 [Download the release](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases) · [Report a bug](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/issues) · [Support on Ko-fi](https://ko-fi.com/chon9workshop)
 
@@ -9,10 +13,10 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 ## Features
 
 - Native **1920 × 1080** mission rendering with separated bottom panels and working minimaps, menu entries and tooltips.
-- A larger resource bar displaying the viewed/selected owned city's stocks, plus population and player gold.
-- Larger right-side command buttons inside the original panel artwork; corrected placement and selection redraws.
-- Fixes for duplicated buildings near units and the command-panel redraw freeze after rebuilding the button list (v0.3.2), including the remaining「任命」appointment case (v0.3.3).
-- Larger, antialiased text. Public releases use **Dragon UI Bitmap**, derived from OFL-licensed Noto Sans CJK TC. The top bar uses the locally installed Windows font at runtime.
+- Original top bar and city-resource popup, with the game owning its control geometry and redraws.
+- Original-size right-side command buttons, docked beside the right minimap. The enlarged replacement command grid is removed in this release.
+- Building-origin correction retained. The runtime button resizing implicated in earlier command/appointment freezes is removed; no custom top/action draw hooks are installed by DTNet.
+- Larger, antialiased text. Public releases use **Dragon UI Bitmap**, derived from OFL-licensed Noto Sans CJK TC.
 - **cnc-ddraw borderless mode** with a 60 FPS presentation limit and easier Alt+Tab.
 - **Steam join-code multiplayer** without VPN software, IPX drivers or manual router forwarding.
 - Guided **Install.cmd / Update.cmd**: automatically reverse an older full-fix pack, choose display output, English / Traditional Chinese, and whether to skip opening videos.
@@ -22,11 +26,7 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 
 ![Native widescreen mission with separated HUD panels](docs/screenshots/widescreen.png)
 
-*Existing screenshot from the earlier 1080p build. The public release adds the larger resource bar and command panel described above; bundled font shapes also differ.*
-
-![Modern HUD development preview](docs/screenshots/modern-hud-preview.png)
-
-*Modern HUD development screenshot supplied during testing. Taken before the final bottom-right header-spacing correction; that correction was subsequently confirmed by the tester. These are gameplay captures, not mockups.*
+*Earlier classic widescreen capture. v0.4.1 retains this panel layout, with smoother bundled fonts and corrected visibility in the bottom middle gap.*
 
 ![Steam join-code host and join dialog](docs/screenshots/steam-multiplayer.png)
 
@@ -35,7 +35,7 @@ A community patch for the Windows Steam edition: native 1080p gameplay, clearer 
 ## Install
 
 1. Save and close the game. **You do not need to manually restore an earlier combined full-fix pack.**
-2. Download **DragonFullFix-0.4.0-1080p-public-beta.zip** from [Releases](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases). GitHub's automatic **Source code** archives are for developers, not installation.
+2. Download **DragonFullFix-0.4.1-1080p-public-beta.zip** from [v0.4.1 Releases](https://github.com/chon9/Dragon-Throne-Battle-of-Red-Cliffs-Steam-Fix/releases/tag/v0.4.1). GitHub's automatic **Source code** archives are for developers, not installation.
 3. In Steam, choose **Manage → Browse local files**. Extract the ZIP so the folder layout is:
 
    ```text
@@ -63,7 +63,7 @@ Modified or different executable/font files are rejected before installation. Re
 
 ### Updating and uninstalling
 
-Close the game, extract the new ZIP into the same game folder, replacing the old `DragonFullFix` package folder, then run **Install.cmd** or **Update.cmd**. Keep `modernization/history` and `modernization/installed-full-fix.json`: they identify and preserve your original files. Automatic upgrade is tested from the private **0.2 / 0.3** friend packs and public **0.3.3**. Earlier public packs use the same record format. This is a local package updater; it does not download releases in the background.
+Close the game, extract the new ZIP into the same game folder, replacing the old `DragonFullFix` package folder, then run **Install.cmd** or **Update.cmd**. Keep `modernization/history` and `modernization/installed-full-fix.json`: they identify and preserve your original files. The guided updater was tested from private **0.2 / 0.3** packs and public **0.3.3** for v0.4.0; v0.4.1 additionally tests upgrading from **v0.4.0**. Earlier public packs use the same record format. This is a local package updater; it does not download releases in the background.
 
 The updater stages and verifies new files **before** reversing the old patch. A failed operation attempts to restore the previous installed version and its preferences. If the updater was interrupted, run **Recover.cmd**, then rerun the wizard. Changed game files, missing/corrupt backups and unrelated layered mods are protected and block automatic updates; keep the diagnostic message and backups instead of bypassing the checks.
 
@@ -101,8 +101,8 @@ Steam can provide relay routing without router setup. Steam online is also requi
 | Area | Status |
 | --- | --- |
 | Windows 11 / Steam / 1080p | Tested locally |
-| HUD, menus, minimaps and tooltips | Iteratively tested; final command-panel layout confirmed by user |
-| Building duplication / command-panel freeze | Corrections confirmed in local gameplay; regression tests added |
+| Classic HUD / bottom gap | Runtime replacement removed; units and drag selection confirmed locally; friend long-session testing pending |
+| Building duplication / command-panel freeze | Building correction retained; previous button repairs were insufficient for another reported v0.4.0 freeze |
 | Two-PC multiplayer | User and friend confirmed play on the preceding adapter; protocol unchanged |
 | Public Noto-derived fonts | Build and raster tests; broader in-game validation pending |
 | Command delay | Reported for move/build/train; diagnostics added, **not claimed fixed** |
@@ -110,7 +110,7 @@ Steam can provide relay routing without router setup. Steam online is also requi
 | Native 4K / other aspect ratios | Not implemented or validated |
 | 60 FPS | Presentation limit, not a guarantee of 60 simulation updates or minimum performance |
 
-The release remains **beta** because broader public-font validation and other coverage gaps remain. v0.4.0 adds guided updates and video selection while retaining the v0.3.3 gameplay fixes; the network protocol and command timing are unchanged.
+The release remains **beta** because broader public-font validation and other coverage gaps remain. v0.4.1 keeps the guided updater and removes runtime HUD replacement. The network protocol and command timing are unchanged. The latest friend freeze has not been captured, so another cause remains possible.
 
 For multiplayer delay, play normally for at least a minute with both players connected, then attach relevant `DTNet.log` excerpts to an issue. The adapter records polling, queue and connection timing every ten seconds; it does not log chat, join codes or command payloads. Review logs before posting. Disconnect recovery and long, high-population matches need more testing.
 

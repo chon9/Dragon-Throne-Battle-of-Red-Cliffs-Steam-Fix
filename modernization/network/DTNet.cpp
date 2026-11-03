@@ -19,7 +19,8 @@
 #include <map>
 #include <memory>
 #include <mutex>
-#include "ModernUI.h"
+// The networking adapter must not install HUD drawing hooks. The retired
+// replacement resized live controls and could corrupt later native redraws.
 
 static const GUID SteamProvider = {
     0xe9155d1f, 0xd2c3, 0x469b, {0xa2, 0x9e, 0x6a, 0x19, 0x63, 0x42, 0x11, 0x01}};
@@ -1117,7 +1118,6 @@ extern "C" HRESULT WINAPI DTCoCreateInstance(REFCLSID cls, LPUNKNOWN outer, DWOR
                                              REFIID iid, void **out) {
     NET_LOCK;
     PatchProviderLabel();
-    modernui::Install();
     if (cls == CLSID_DirectPlay && iid == IID_IDirectPlay4A) {
         if (!out)
             return E_POINTER;

@@ -7,13 +7,14 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+import pefile
 
 ROOT = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--package', type=Path, help='Unpacked test candidate, before building final ZIP')
 p.add_argument('--previous', type=Path, action='append', default=[])
 args = p.parse_args()
-archive = ROOT / 'dist/DragonFullFix-0.4.0-1080p-public-beta.zip'
+archive = ROOT / 'dist/DragonFullFix-0.4.1-1080p-public-beta.zip'
 fixture = Path(tempfile.mkdtemp(prefix='updater-test-', dir=ROOT / 'builds'))
 pack = fixture / 'DragonFullFix'
 checks = []
@@ -82,6 +83,14 @@ def assert_installed(resolution='Desktop', skip='Off'):
     s = json.loads(state.read_text(encoding='utf-8-sig'))
     assert s['version'] == manifest['version']
     assert s['options'] == {'resolution': resolution, 'skipVideos': skip}
+    assert manifest['hud'] == 'classic-widescreen'
+    pe = pefile.PE(str(fixture / 'dragonthrone.exe'))
+    assert pe.get_dword_at_rva(0x56d1ce - 0x400000) == 20
+    assert pe.get_dword_at_rva(0x56d1d5 - 0x400000) == 1920 * 20
+    assert pe.get_dword_at_rva(0x68e100 - 0x400000) == 0x56e4e0
+    assert pe.get_dword_at_rva(0x68e490 - 0x400000) == 0x57c3c0
+    assert b'DTMODERN1' not in pe.__data__[:]
+    pe.close()
     for e in s['files']:
         assert sha(fixture / e['name']) == e['after'], e['name']
     for e in manifest['files']:
@@ -209,7 +218,7 @@ engine('restore'); assert_original()
 passed('Pressing Enter through all prompts uses desktop output, current language and videos Off')
 report = {'version': manifest['version'], 'archive_sha256': sha(archive) if not args.package else None,
           'installer': 'Windows PowerShell 5.1', 'checks': checks,
-          'pending': ['Visual validation of scaled 1440p/4K output', 'Live elevated language switch; routing tested with registry stub',
+          'pending': ['Friend v0.4.0 freeze reproduction and long-session stability with classic HUD', 'Visual validation of scaled 1440p/4K output', 'Live elevated language switch; routing tested with registry stub',
                       'Public Noto fonts and long English UI visual coverage', 'Measured command latency', 'Native 4K HUD'],
           'notes': 'No live installation, registry, save or Steam settings changed by these fixture tests.'}
 (ROOT / 'dist/updater-verification.json').write_text(json.dumps(report, indent=2), encoding='utf-8')

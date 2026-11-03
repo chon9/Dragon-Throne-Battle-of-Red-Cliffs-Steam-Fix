@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.1 — classic HUD and world-gap beta
+
+- Remove runtime replacement-HUD code from DTNet. Restore the original 20px top bar, city-resource popup and original-size command buttons. The separate renderer-HUD experiment and F8 remapping are excluded.
+- Fix disappearing units and selection outlines in the open gap between the bottom panels. Keep world geometry full-height and reject clicks under actual HUD panels at the input checks instead of shrinking the shared world rectangle based on cursor position.
+- The user confirmed units stay visible and drag selection works across the bottom gap and right panel.
+- Retain widescreen docking, minimaps, menu/tooltips, smooth fonts, building-origin corrections, stock cnc-ddraw borderless mode, Steam join codes and the guided automatic updater.
+- Add a real-DLL guard against runtime HUD hooks and execute the generated x86 hit checks at 19,220 boundary points, checking unchanged world geometry and native popup delegation.
+- A friend's v0.4.0 freeze was not captured; this release removes the replacement mechanism but does not claim every freeze or multiplayer command delay is fixed. Longer sessions on the friend's PC remain to be tested.
+
 ## 0.4.0 — guided update beta
 
 - Add Install.cmd / Update.cmd choices for borderless output size, current/English/Traditional Chinese language, and opening videos (skip defaults to Off). The HUD remains native 1080p; larger outputs are scaled.

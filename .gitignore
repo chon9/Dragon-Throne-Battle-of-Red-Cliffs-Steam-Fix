@@ -27,3 +27,6 @@ Save/
 SysInfo.cfg
 Default.sty
 .env*
+
+# Withdrawn local HUD experiment; excluded from releases and public source.
+modernization/renderer-hud/

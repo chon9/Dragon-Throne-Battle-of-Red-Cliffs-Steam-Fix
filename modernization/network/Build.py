@@ -17,7 +17,7 @@ steam_dll = STEAM/'steam_api.dll'
 if not steam_dll.exists(): steam_dll=ROOT.parent/'steam_api.dll'
 shutil.copy2(steam_dll,OUT/'steam_api.dll')
 subprocess.run(['python',str(ROOT/'Generate-Interface.py')],check=True)
-for name in ['SteamProbe','Test-Protocol','Test-Latency','Test-ModernUI','DTNet','Test-Adapter','Test-ProviderCore']:
+for name in ['SteamProbe','Test-Protocol','Test-Latency','Test-ModernUI','DTNet','Test-NoHudHooks','Test-Adapter','Test-ProviderCore']:
     if not (ROOT/(name+'.cpp')).exists(): continue
     dll=name=='DTNet'
     command=[str(VC/'bin/Hostx64/x86/cl.exe'),'/nologo','/utf-8','/D_CRT_SECURE_NO_WARNINGS','/std:c++17','/O2','/MT','/EHsc','/W4','/wd4100',
@@ -25,11 +25,13 @@ for name in ['SteamProbe','Test-Protocol','Test-Latency','Test-ModernUI','DTNet'
     if dll: command+=['/LD']
     command+=['/link','/LIBPATH:'+str(VC/'lib/x86'),'kernel32.lib','user32.lib','gdi32.lib','ole32.lib','uuid.lib',str(STEAM/'steam_api.lib')]
     if dll: command+=['/DEF:'+str(ROOT/'DTNet.def')]
+    if name=='Test-NoHudHooks': command+=['/DYNAMICBASE:NO','/BASE:0x400000']
     subprocess.run(command,env=env,cwd=OUT,check=True)
 subprocess.run([str(OUT/'Test-Protocol.exe')],check=True,cwd=OUT)
 subprocess.run([str(OUT/'Test-Latency.exe')],check=True,cwd=OUT)
 subprocess.run([str(OUT/'Test-ModernUI.exe')],check=True,cwd=OUT)
 subprocess.run([str(OUT/'Test-ProviderCore.exe')],check=True,cwd=OUT)
+subprocess.run([str(OUT/'Test-NoHudHooks.exe')],check=True,cwd=OUT)
 subprocess.run([str(VC/'bin/Hostx64/x86/cl.exe'),'/nologo','/std:c++17','/O2','/MT','/EHsc',
                 '/Fo'+str(OUT/'Test-WorldOrigin.obj'),'/Fe'+str(OUT/'Test-WorldOrigin.exe'),
                 str(ROOT.parent/'Test-WorldOrigin.cpp'),'/link','kernel32.lib'],env=env,cwd=OUT,check=True)

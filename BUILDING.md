@@ -33,10 +33,10 @@ python modernization/network/Build.py
 python modernization/Build-SmoothFonts.py --test
 python modernization/Release.py
 python modernization/Test-PublicPackage.py
-python modernization/Test-Updater.py --previous modernization/dist/DragonFullFix-0.3.3-1080p-public-beta.zip
+python modernization/Test-Updater.py --previous modernization/dist/DragonFullFix-0.4.0-1080p-public-beta.zip
 ```
 
-Check each command succeeds before continuing. Font generation may take several minutes. `Release.py` verifies the Noto source/atlas hashes, generates the modern 1080p executable, redirects the three COM imports to DTNet, and creates compressed deltas plus a reversible installer in `modernization/dist/`. It refuses an existing version staging directory to avoid stale source/dependency files; use a fresh checkout or a new release version for a rebuild.
+Check each command succeeds before continuing. Font generation may take several minutes. `Release.py` verifies the Noto source/atlas hashes, generates the classic-HUD 1080p executable, redirects the three COM imports to DTNet, and creates compressed deltas plus a reversible installer in `modernization/dist/`. It refuses an existing version staging directory to avoid stale source/dependency files; use a fresh checkout or a new release version for a rebuild.
 
 `Test-PublicPackage.py` uses a separate temporary game fixture, verifies all installed output hashes, rejects altered inputs, checks exact rollback, and preserves save/settings sentinels. Pass `--previous path/to/DragonFullFix-0.3.2-1080p-public-beta.zip` to additionally test upgrading from the preceding public release through Restore and Install.
 
@@ -49,7 +49,8 @@ Check each command succeeds before continuing. Font generation may take several 
 | `modernization/Build-Widescreen.py` | Guarded exact-build binary patches, world viewport, split HUD, input bounds and font hook placement |
 | `modernization/WorldOriginPatch.py` | Five exact-byte corrections aligning sprites and building overlap with the actual viewport origin |
 | `modernization/SmoothFont.cpp` | Grayscale glyph coverage composited into RGB565 |
-| `modernization/network/ModernUI.h` | Resource row, retained resource icons, command reflow and paint/hit geometry |
+| `modernization/network/ModernUI.h` | Retired replacement-HUD prototype; kept for reference/tests, excluded from DTNet |
+| `modernization/network/Test-NoHudHooks.cpp` | Loads the real DLL with dummy legacy HUD slots and confirms no runtime HUD replacement |
 | `modernization/network/DTNet.cpp` | DirectPlay4 adapter using Steam lobbies and reliable messages |
 | `modernization/network/Protocol.h` | Session/player packet validation and join codes |
 | `modernization/network/LatencyStats.h` | Diagnostic timing windows; no simulation scheduling changes |
@@ -62,3 +63,20 @@ Check each command succeeds before continuing. Font generation may take several 
 The C++ build runs protocol validation, timing statistics, action geometry/transparent backing, command-list rebuild and untracked appointment-button freeze regressions, isolated provider state tests, and execution of all five x86 world-origin replacements. The font test covers RGB565 compositing, clipping, transparent pixels and balanced surface locks. These are local regression tests, not proof of live multiplayer timing, every UI state, English text fit or 4K compatibility.
 
 The game still owns its simulation, game data and artwork. Hard-coded addresses and 1080p geometry intentionally support one executable only. A configurable mod API, offline LAN and reconnect support are future work.
+
+The HUD-isolation regression reserves dummy game addresses in its own fixed-base test executable; it never attaches to the live game or initializes Steam. Environments that prohibit fixed-base executables must run this test in a normal Windows process. The old ModernUI unit test remains historical coverage, not evidence that the retired renderer was safe in every game state.
+
+## World-gap input regression
+
+`modernization/Test-WorldGap.c` executes the generated x86 input guards inside
+its own fixed-base test process. With an x86 MinGW-w64 compiler on PATH, after
+building the release:
+
+```powershell
+gcc -std=c99 -O2 -Wall modernization/Test-WorldGap.c -o modernization/builds/Test-WorldGap.exe '-Wl,--disable-dynamicbase,--image-base,0x400000'
+modernization/builds/Test-WorldGap.exe modernization/builds/public/dragonthrone.exe
+```
+
+The test does not launch the game or execute its entry point/imports. It checks
+19,220 boundary points, immutable world geometry, native bounds/popup delegation
+and legacy-control fallback. Live gameplay confirmation is recorded separately.

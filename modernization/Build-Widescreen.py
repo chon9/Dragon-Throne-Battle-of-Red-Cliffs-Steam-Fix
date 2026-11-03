@@ -205,36 +205,52 @@ def build(width, height, smooth_fonts=False, modern_hud=False):
     code.extend(block)
     patch(0x5d4a60, before, jump(0x5d4a60, target) + b'\x90' * (len(before) - 5), 'Allocate and describe native world viewport together')
 
-    # World drawing covers the open middle below the HUD line. Legacy input
-    # code still reads a rectangle: shorten that rectangle under either HUD
-    # section, and retain full height over the opening. Drawing always restores
-    # full height for the duration of the renderer call.
-    replay = pe.get_data(0x5d5fd0 - 0x400000, 5)
-    assert replay == bytes.fromhex('5355568bf1')
-    trampoline = add_stub(replay)
-    code.extend(jump(trampoline + 5, 0x5d5fd5))
-    while len(code) % 16:
-        code.append(0x90)
-    target = code_va + len(code)
-    wrapper = bytearray(b'\x81\x79\x10' + u32(width))
-    fallback_branch = len(wrapper); wrapper.extend(b'\x0f\x85' + b'\0' * 4)
-    wrapper.extend(b'\x55\x8b\xec\x56\x8b\xf1\xc7\x46\x14' + u32(world_height))
-    wrapper.extend(b'\xff\x75\x08\x8b\xce')
-    wrapper.extend(jump(target + len(wrapper), trampoline, b'\xe8'))
-    wrapper.extend(b'\xc7\x46\x14' + u32(height - 207 - top_height) + b'\xa1' + u32(0x8b9d60))
-    wrapper.extend(b'\x3d' + u32(750))
-    left_branch = len(wrapper); wrapper.extend(b'\x0f\x8c' + b'\0' * 4)
-    wrapper.extend(b'\x3d' + u32(width - (454 if modern_hud else 284)))
-    right_branch = len(wrapper); wrapper.extend(b'\x0f\x8d' + b'\0' * 4)
-    wrapper.extend(b'\xc7\x46\x14' + u32(world_height))
-    finish = len(wrapper)
-    wrapper.extend(b'\x8b\x46\x10\x0f\xaf\x46\x14\x89\x46\x18\x5e\x5d\xc2\x04\x00')
-    fallback = len(wrapper)
-    wrapper.extend(jump(target + len(wrapper), trampoline))
-    for offset, destination in [(fallback_branch, fallback), (left_branch, finish), (right_branch, finish)]:
-        wrapper[offset + 2:offset + 6] = u32(destination - offset - 6)
-    code.extend(wrapper)
-    patch(0x5d5fd0, replay, jump(0x5d5fd0, target), 'Draw world behind separated HUD sections; limit world input under panels')
+    # The world rectangle is also used by sprites and selection outlines outside
+    # the main terrain draw. Never shorten it based on the mouse position.
+    # Reject panel hits at the two input entry points instead; native bounds,
+    # menus and popup checks still run for every accepted point.
+    right_edge = width - (454 if modern_hud else 284)
+
+    def panel_hit_guard(pointer_point=False):
+        data = bytearray()
+        bypass = []
+        if pointer_point:
+            data.extend(b'\xa1' + u32(0x8e02e7))  # world
+            data.extend(b'\x81\x78\x10' + u32(width))
+        else:
+            data.extend(b'\x81\x39' + u32(0x68fda8))  # only world class
+            bypass.append(len(data)); data.extend(b'\x0f\x85' + bytes(4))
+            data.extend(b'\x81\x79\x10' + u32(width))
+        bypass.append(len(data)); data.extend(b'\x0f\x85' + bytes(4))
+        if pointer_point:
+            data.extend(b'\x8b\x54\x24\x04\x8b\x42\x04')  # point.y
+        else:
+            data.extend(b'\xa1' + u32(0x8b9d64))
+        data.extend(b'\x3d' + u32(height - 207))
+        bypass.append(len(data)); data.extend(b'\x0f\x8c' + bytes(4))
+        data.extend(b'\x8b\x02' if pointer_point else b'\xa1' + u32(0x8b9d60))
+        data.extend(b'\x3d' + u32(750))
+        reject = len(data); data.extend(b'\x0f\x8c' + bytes(4))
+        data.extend(b'\x3d' + u32(right_edge))
+        bypass.append(len(data)); data.extend(b'\x0f\x8c' + bytes(4))
+        rejected = len(data)
+        data.extend(b'\x31\xc0' + (b'\xc2\x04\x00' if pointer_point else b'\xc3'))
+        accepted = len(data)
+        for offset in bypass:
+            data[offset+2:offset+6] = u32(accepted-offset-6)
+        data[reject+2:reject+6] = u32(rejected-reject-6)
+        return data
+
+    # World virtual hit test: thiscall, no arguments, original rectangle fallback.
+    replay = pe.get_data(0x560670 - 0x400000, 9)
+    assert replay == bytes.fromhex('8b41088b15609d8b00')
+    hook(0x560670, 9, panel_hit_guard() + replay,
+         'Exclude bottom HUD panels from world mouse hits without changing render geometry')
+    # Manager point query: also used to begin drag selection and issue commands.
+    replay = pe.get_data(0x5621e0 - 0x400000, 5)
+    assert replay == bytes.fromhex('a1e7028e00')
+    hook(0x5621e0, 5, panel_hit_guard(True) + replay,
+         'Exclude bottom HUD panels from point queries; retain native popup checks')
     # The world now redraws behind the panels, so invalidate their children
     # together before painting. This also preserves selected-unit details.
     while len(code) % 16:

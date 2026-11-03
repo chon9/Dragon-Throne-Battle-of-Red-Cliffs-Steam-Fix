@@ -12,7 +12,7 @@ import pefile
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
-VERSION = '0.4.0'
+VERSION = '0.4.1'
 FONT_SHA = 'dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4'
 STEAM_SHA = '67ae11d71ae6ec404090094df1e47b614d27400dc53fa450023e6fbcf347902c'
 DDRAW_SHA = '85e0f7d530dfda134793a57cb3e76b0287dcc96892ee57162dd68f47283b03a9'
@@ -33,9 +33,14 @@ def main():
     coverage=json.loads((ROOT/'builds/smooth-fonts/manifest.json').read_text())
     assert coverage['source_sha256']==FONT_SHA
     assert sha(ROOT/'builds/smooth-fonts/coverage.bin')==coverage['sha256']
-    module('wide',ROOT/'Build-Widescreen.py').build(1920,1080,True,True)
-    exe=bytearray((ROOT/'builds/native-1920x1080-smooth-modern/dragonthrone.exe').read_bytes())
+    module('wide',ROOT/'Build-Widescreen.py').build(1920,1080,True,False)
+    exe=bytearray((ROOT/'builds/native-1920x1080-smooth/dragonthrone.exe').read_bytes())
+    assert b'DTMODERN1' not in exe, 'Classic profile must not enable runtime HUD replacement'
     pe=pefile.PE(data=exe)
+    assert pe.get_dword_at_rva(0x56d1ce-0x400000)==20
+    assert pe.get_dword_at_rva(0x56d1d5-0x400000)==1920*20
+    assert pe.get_dword_at_rva(0x68e100-0x400000)==0x56e4e0
+    assert pe.get_dword_at_rva(0x68e490-0x400000)==0x57c3c0
     entry=next(e for e in pe.DIRECTORY_ENTRY_IMPORT if e.dll==b'ole32.dll')
     assert {i.name for i in entry.imports}=={b'CoInitialize',b'CoUninitialize',b'CoCreateInstance'}
     offset=pe.get_offset_from_rva(entry.struct.Name)
@@ -50,9 +55,9 @@ def main():
     out=ROOT/'dist'/f'v{VERSION}'/'DragonFullFix'
     out.mkdir(parents=True,exist_ok=False)
     (out/'payload').mkdir()
-    manifest={'version':VERSION+'-public-beta','resolution':'1920x1080',
+    manifest={'version':VERSION+'-public-beta','resolution':'1920x1080','hud':'classic-widescreen',
               'font':'Dragon UI Bitmap (Noto Sans CJK TC derivative; OFL-1.1)',
-              'status':'Building redraw and command-panel/appointment freeze fixes user confirmed on local build; public font visual coverage pending; latency diagnostics only','files':[]}
+              'status':'Classic HUD; world-gap visibility and selection confirmed locally; friend long-session stability pending','files':[]}
 
     def delta(name, original, updated):
         before,after=original.read_bytes(),updated.read_bytes()
@@ -101,6 +106,7 @@ def main():
     paths=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=REPO).decode().split('\0')
     for name in sorted(set(filter(None,paths))):
         assert '/vendor/steam/' not in name and '/baseline/' not in name
+        assert not name.startswith('modernization/renderer-hud/'), 'Withdrawn HUD experiment must not ship'
         assert Path(name).suffix.lower() not in ('.exe','.dll','.lib','.fnt','.otf','.log','.dmp')
         dest=out/'source'/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(REPO/name,dest)
     archive=ROOT/'dist'/f'DragonFullFix-{VERSION}-1080p-public-beta.zip'
